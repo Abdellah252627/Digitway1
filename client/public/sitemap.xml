@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://digitway.com/en</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://digitway.com/en"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://digitway.com/ar"/>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://digitway.com/ar</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://digitway.com/en"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://digitway.com/ar"/>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://digitway.com/en/services</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://digitway.com/en/services"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://digitway.com/ar/services"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://digitway.com/en/services/landing-pages</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://digitway.com/en/services/landing-pages"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://digitway.com/ar/services/landing-pages"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://digitway.com/en/services/dashboards</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://digitway.com/en/services/dashboards"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://digitway.com/ar/services/dashboards"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://digitway.com/en/services/ecommerce</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://digitway.com/en/services/ecommerce"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://digitway.com/ar/services/ecommerce"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://digitway.com/en/portfolio</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://digitway.com/en/portfolio"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://digitway.com/ar/portfolio"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://digitway.com/en/process</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://digitway.com/en/process"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://digitway.com/ar/process"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://digitway.com/en/reviews</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://digitway.com/en/reviews"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://digitway.com/ar/reviews"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://digitway.com/en/contact-links</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://digitway.com/en/contact-links"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://digitway.com/ar/contact-links"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://digitway.com/en/quote</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://digitway.com/en/quote"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://digitway.com/ar/quote"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://digitway.com/en/privacy</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://digitway.com/en/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://digitway.com/ar/privacy"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+</urlset>

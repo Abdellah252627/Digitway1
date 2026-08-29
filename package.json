@@ -1,0 +1,17 @@
+{
+  "name": "digitway",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Digitway — Freelance Services Marketing Website & Admin Panel",
+  "scripts": {
+    "server": "npm --prefix server run dev",
+    "client": "npm --prefix client run dev",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "build": "npm --prefix client run build",
+    "start": "npm --prefix server start",
+    "install:all": "npm install && npm --prefix server install && npm --prefix client install"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

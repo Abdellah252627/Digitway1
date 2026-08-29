@@ -1,0 +1,601 @@
+{
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "allServices": "All Services",
+    "landingPages": "Landing Pages",
+    "dashboards": "Dashboards & SaaS",
+    "ecommerce": "E-Commerce",
+    "portfolio": "Portfolio",
+    "process": "Process",
+    "reviews": "Reviews",
+    "contactLinks": "Contact Links",
+    "privacy": "Privacy Policy",
+    "getQuote": "Get a Quote",
+    "adminPortal": "Admin Portal"
+  },
+  "hero": {
+    "badge": "Available for Q3/Q4 Projects",
+    "title": "Engineering High-Converting Web Platforms & SaaS for Ambitious Businesses",
+    "subtitle": "Freelance MERN developer specializing in pixel-perfect Landing Pages, fullstack SaaS Dashboards, and ultra-fast E-commerce stores. Clean code, fixed pricing, and rapid delivery.",
+    "ctaQuote": "Request a Quote",
+    "ctaServices": "Explore Services",
+    "ctaPortfolio": "View Demos",
+    "stats": {
+      "satisfaction": "100% Client Satisfaction",
+      "turnaround": "3-5 Days Fast Turnaround",
+      "stack": "Modern MERN + Tailwind",
+      "ownership": "100% Code Ownership"
+    }
+  },
+  "services": {
+    "title": "Specialized Web Engineering Services",
+    "subtitle": "Tailored full-stack development without the bloated agency overhead. You work directly with a senior MERN engineer from kickoff to launch.",
+    "startingAt": "Starting at",
+    "estimatedTimeline": "Estimated Delivery",
+    "learnMore": "View Details & Scope",
+    "requestService": "Request This Service",
+    "whatsIncluded": "What's Included",
+    "techArchitecture": "Tech Stack & Architecture",
+    "idealFor": "Ideal For",
+    "landingPages": {
+      "title": "High-Converting Landing Pages",
+      "tagline": "Transform clicks into paying clients with sub-second load times and persuasive UX.",
+      "timeline": "3-5 Days",
+      "description": "Custom designed, mobile-first marketing pages engineered for conversion. Built with React and Tailwind CSS for blazing speed, SEO dominance, and seamless lead capture.",
+      "includes": [
+        "Custom responsive design (Mobile, Tablet, Desktop)",
+        "Sub-second load times (<800ms) with 95+ Core Web Vitals",
+        "Conversion-focused copywriting structure & clear CTAs",
+        "Lead capture forms with automated email / webhook routing",
+        "On-page SEO optimization & OpenGraph social cards",
+        "Analytics & pixel tracking integration (Google Analytics / Meta)",
+        "14-day post-launch warranty & revisions"
+      ],
+      "ideal": "Startups launching new products, marketing campaigns, service businesses, and SaaS pre-launch waitlists."
+    },
+    "dashboards": {
+      "title": "Custom Dashboards & SaaS Web Apps",
+      "tagline": "Empower your operations with secure, scalable, and intuitive fullstack applications.",
+      "timeline": "2-3 Weeks",
+      "description": "End-to-end full-stack web applications and private admin dashboards. Designed to handle complex business logic, user authentication, interactive analytics, and database management.",
+      "includes": [
+        "Fullstack MERN architecture (React, Node.js, Express, MongoDB/SQL)",
+        "Secure Role-Based Access Control (RBAC) & authentication",
+        "Interactive analytics charts, telemetry maps, and real-time metrics",
+        "CRUD data tables with advanced filtering, sorting, and CSV/PDF export",
+        "RESTful or GraphQL API endpoints with clean documentation",
+        "Third-party integrations (Stripe, Twilio, SendGrid, Cloudinary)",
+        "7-day guarantee to fix technical issues after delivery, within the originally agreed project scope."
+      ],
+      "ideal": "B2B SaaS platforms, logistics systems, internal operations tools, and client portal applications."
+    },
+    "ecommerce": {
+      "title": "High-Performance E-Commerce Stores",
+      "tagline": "Custom storefronts that maximize average order value and checkout conversions.",
+      "timeline": "1-2 Weeks",
+      "description": "Bespoke digital storefronts engineered without Shopify bloat. Lightning-fast product catalogs, customized cart drawers, and frictionless global checkout flows.",
+      "includes": [
+        "Custom product catalog with instant search & multi-variant filtering",
+        "Frictionless checkout integrated with Stripe, PayPal, or local gateways",
+        "Dynamic cart drawer with upsells and discount code logic",
+        "Automated customer order confirmations & transactional emails",
+        "Lightweight admin panel to manage products, prices, and stock",
+        "SEO-friendly structured data for rich Google Shopping results",
+        "7-day guarantee to fix technical issues after delivery, within the originally agreed project scope."
+      ],
+      "ideal": "Direct-to-consumer (DTC) brands, digital products sellers, and boutique shops seeking unique shopping experiences."
+    }
+  },
+  "portfolio": {
+    "title": "Featured Projects & Interactive Demos",
+    "subtitle": "Explore real production-grade web applications and design systems built with the MERN stack.",
+    "viewDemo": "Live Demo",
+    "techUsed": "Technologies",
+    "keyMetrics": "Impact & Highlights",
+    "projects": {
+      "atelier": {
+        "title": "Atelier Design Studio",
+        "category": "Landing Page / Showcase",
+        "summary": "Minimalist luxury architecture and interior design portfolio featuring buttery smooth transitions and appointment booking.",
+        "metrics": "99 Performance Score • Sub-400ms load time",
+        "tags": ["React", "Tailwind CSS", "Framer Motion", "SEO"]
+      },
+      "fleet": {
+        "title": "FleetFlow Logistics Dashboard",
+        "category": "Dashboards & SaaS",
+        "summary": "Enterprise telematics and live delivery tracking platform with interactive GPS routes, driver status, and payroll analytics.",
+        "metrics": "Real-time updates • 40+ metric widgets",
+        "tags": ["React", "Node.js", "Express", "MongoDB", "Leaflet"]
+      },
+      "orbit": {
+        "title": "Orbit SaaS Subscription Platform",
+        "category": "Dashboards & SaaS",
+        "summary": "B2B analytics and recurring billing management portal with multi-seat teams, usage meters, and Stripe webhook synchronization.",
+        "metrics": "End-to-end RBAC • Automated invoicing",
+        "tags": ["React", "Express", "Stripe API", "Chart.js"]
+      },
+      "nutri": {
+        "title": "NutriPure Meal-Prep Store",
+        "category": "E-Commerce",
+        "summary": "Direct-to-consumer nutrition store featuring dietary meal customization, calorie calculators, and frictionless 1-click checkout.",
+        "metrics": "2.4x conversion lift • Instant cart drawer",
+        "tags": ["React", "Node.js", "Tailwind", "Stripe Checkout"]
+      }
+    }
+  },
+  "process": {
+    "title": "A Transparent, 4-Step Engineering Process",
+    "subtitle": "No surprises, no missed deadlines. Here is exactly how we take your project from initial idea to production launch.",
+    "steps": [
+      {
+        "number": "01",
+        "title": "Discovery & Scope Definition",
+        "desc": "We start with a thorough review of your business goals, target audience, and feature requirements. Within 24 hours, you receive a transparent fixed-price proposal with milestone deliverables."
+      },
+      {
+        "number": "02",
+        "title": "UI/UX & Architecture Blueprint",
+        "desc": "Before writing code, we establish the design system, interactive wireframes, and database models to ensure the user flow is frictionless and scalable."
+      },
+      {
+        "number": "03",
+        "title": "Agile Build & Staging Demos",
+        "desc": "The application is engineered using clean, modular MERN code. You receive live staging preview links at each major milestone to provide real-time feedback."
+      },
+      {
+        "number": "04",
+        "title": "Deployment, Handover & 7-Day Guarantee",
+        "desc": "We handle DNS setup, SSL certificates, database indexing, and production deployment. You receive full source code repository ownership and a 7-day guarantee to fix technical issues after delivery, within the originally agreed project scope."
+      }
+    ],
+    "faqTitle": "Frequently Asked Questions",
+    "faqs": [
+      {
+        "q": "How do payments and milestones work?",
+        "a": "Projects are typically structured with a 50% deposit to initiate scoping and architecture, and 50% upon final sign-off and deployment to production. For larger full-stack apps, milestone payments can be divided into 3 phases."
+      },
+      {
+        "q": "Do I own 100% of the source code?",
+        "a": "Yes, absolutely! Upon final project completion, you receive complete ownership and full access to the GitHub repository, database schemas, and documentation. No licensing lock-ins."
+      },
+      {
+        "q": "What if I need ongoing maintenance or new features later?",
+        "a": "Every project includes a 7-day guarantee to fix technical issues after delivery, within the originally agreed project scope. This does not cover new feature requests, design changes, or any additions outside the original scope, which are billed as separate new work."
+      },
+      {
+        "q": "Why choose a freelance MERN engineer instead of an agency?",
+        "a": "With me, you communicate directly with the engineer actually building your product. There are no junior developers, no account manager games, lower overhead costs, and much faster iteration cycles."
+      }
+    ]
+  },
+  "contactLinks": {
+    "title": "Direct Contact Channels",
+    "subtitle": "Have a quick question or prefer chatting directly? Connect with me across any of my official platforms.",
+    "fastestResponse": "Fastest response via WhatsApp & LinkedIn",
+    "whatsapp": {
+      "title": "WhatsApp Direct",
+      "desc": "Instant messaging for quick questions & project discussions.",
+      "action": "Open WhatsApp Chat"
+    },
+    "linkedin": {
+      "title": "LinkedIn Profile",
+      "desc": "Professional background, verified recommendations, and network.",
+      "action": "Connect on LinkedIn"
+    },
+    "instagram": {
+      "title": "Instagram",
+      "desc": "UI/UX snippets, developer workflow, and recent project showcases.",
+      "action": "Follow on Instagram"
+    },
+    "github": {
+      "title": "GitHub Repositories",
+      "desc": "Open source contributions, code structure, and repositories.",
+      "action": "View GitHub Profile"
+    },
+    "email": {
+      "title": "Direct Email",
+      "desc": "Formal inquiries and RFP document submissions.",
+      "action": "Send Email",
+      "copy": "Copy Address"
+    }
+  },
+  "reviews": {
+    "title": "Verified Client Reviews",
+    "subtitle": "Real testimonials from founders and business owners who partnered with Digitway for their web development.",
+    "averageRating": "5.0 Average Rating",
+    "basedOn": "Based on verified client projects",
+    "leaveReviewBtn": "Leave a Review",
+    "modalTitle": "Submit Your Review",
+    "modalSubtitle": "Share your experience working with Digitway. Your review will be reviewed before appearing publicly.",
+    "form": {
+      "name": "Your Name",
+      "role": "Role & Company (e.g. Founder, TechCorp)",
+      "service": "Service Received",
+      "rating": "Star Rating",
+      "comment": "Your Review & Experience",
+      "submit": "Submit Review for Moderation",
+      "submitting": "Submitting Review...",
+      "success": "Thank you! Your review has been submitted for moderation and will appear publicly once approved."
+    }
+  },
+  "quote": {
+    "title": "Request a Project Quote",
+    "subtitle": "Tell me about your vision, timeline, and goals. I will analyze your requirements and send a detailed proposal within 24 hours.",
+    "form": {
+      "clientName": "Your Full Name",
+      "clientNamePlaceholder": "e.g. John Smith",
+      "projectName": "Project Name or Company",
+      "projectNamePlaceholder": "e.g. Acme SaaS Redesign",
+      "serviceType": "Service Type",
+      "selectService": "Select a service...",
+      "description": "Project Scope & Description",
+      "descriptionPlaceholder": "Describe the main features, target audience, reference websites, or specific requirements...",
+      "budget": "Suggested / Preferred Budget",
+      "budgetPlaceholder": "e.g. 500 MAD - 1,000 MAD or 2,500+ MAD",
+      "pricingNotice": "The prices shown on the site are public starting prices only. The final price for each project is agreed personally after reviewing the brief and discussing the scope directly.",
+      "email": "Your Email Address",
+      "emailPlaceholder": "you@company.com",
+      "phone": "Phone / WhatsApp (Optional)",
+      "phonePlaceholder": "+1 234 567 890",
+      "timeline": "Target Launch Timeline",
+      "timelinePlaceholder": "e.g. 2 weeks, next month, flexible",
+      "submit": "Submit Quote Request",
+      "submitting": "Submitting Request...",
+      "successTitle": "Quote Request Submitted!",
+      "successMessage": "Thank you! Your quote request has been received. I will review your requirements and follow up personally to finalize the scope and price directly after the request.",
+      "submitAnother": "Submit Another Request"
+    }
+  },
+  "common": {
+    "close": "Close"
+  },
+  "admin": {
+    "common": {
+      "saving": "Saving...",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "edit": "Edit",
+      "viewDetails": "View Details",
+      "status": "Status",
+      "flexible": "Flexible",
+      "tbd": "TBD",
+      "na": "N/A",
+      "viewAll": "View All"
+    },
+    "status": {
+      "new": "New",
+      "contacted": "Contacted",
+      "converted": "Converted",
+      "archived": "Archived",
+      "in_discussion": "In Discussion",
+      "in_progress": "In Progress",
+      "completed": "Completed",
+      "on_hold": "On Hold"
+    },
+    "layout": {
+      "authenticating": "Authenticating administrative session..."
+    },
+    "login": {
+      "title": "Admin Sign In",
+      "subtitle": "Enter your administrator email to receive a passwordless security code.",
+      "emailLabel": "Administrator Email",
+      "emailPlaceholder": "admin@digitway.com",
+      "sendCodeBtn": "Send Security Code",
+      "sending": "Sending Code...",
+      "enterCodeTitle": "Enter 6-Digit Code",
+      "enterCodeSubtitle": "We sent a temporary verification code to",
+      "codeLabel": "Verification Code",
+      "codePlaceholder": "000000",
+      "verifyBtn": "Verify & Access Portal",
+      "verifying": "Verifying...",
+      "resendBtn": "Resend Code",
+      "changeEmailBtn": "Change Email",
+      "devNotice": "Dev Mode Helper: Click below to fill the current test code.",
+      "fillDevCode": "Fill Dev Code",
+      "footerSecurity": "Passwordless OTP • Admin Protected",
+      "codeSent": "Security code dispatched!",
+      "sendFailed": "Failed to send security code. Check email address.",
+      "invalidCode": "Invalid or expired code. Please try again."
+    },
+    "nav": {
+      "overview": "Overview",
+      "projects": "Projects CRM",
+      "quotes": "Contact Requests",
+      "content": "Content Editor",
+      "reviews": "Review Moderation",
+      "logout": "Sign Out",
+      "notifications": "Notifications",
+      "markAllRead": "Mark all read",
+      "clearAll": "Clear all",
+      "noNotifications": "No new notifications",
+      "viewAllQuotes": "View in Quotes",
+      "viewAllReviews": "View in Reviews",
+      "brandTitle": "Digitway Admin",
+      "brandSubtitle": "Management Suite",
+      "viewSite": "View Site",
+      "viewSiteTitle": "View Public Site",
+      "signOutTitle": "Sign Out",
+      "newBadge": "new",
+      "toggleMenu": "Toggle navigation menu"
+    },
+    "overview": {
+      "title": "Executive Overview",
+      "subtitle": "Real-time summary of active projects, incoming quotes, and pending client reviews.",
+      "activeProjects": "Active Projects",
+      "newQuotes": "New Quote Requests",
+      "pendingReviews": "Reviews to Moderate",
+      "completedProjects": "Completed Deliveries",
+      "recentQuotes": "Recent Quote Inquiries",
+      "recentProjects": "Recent Active Projects",
+      "quickActions": "Quick Management",
+      "newProjectBtn": "+ New Project",
+      "moderateReviewsBtn": "Moderate Reviews",
+      "viewQuotesBtn": "Review Quote Submissions",
+      "loading": "Loading executive overview...",
+      "requiresFollowUp": "Requires Follow-up",
+      "actionNeeded": "Action Needed",
+      "noQuotes": "No quote requests received yet.",
+      "viewRequest": "View Request",
+      "confidential": "Confidential",
+      "crmHub": "CRM Hub",
+      "noProjects": "No projects recorded yet."
+    },
+    "projects": {
+      "title": "Confidential Client Projects",
+      "subtitle": "Internal management of active and past client engagements. Never exposed publicly.",
+      "searchPlaceholder": "Search projects, clients, emails...",
+      "statusFilter": "All Statuses",
+      "inDiscussion": "In Discussion",
+      "inProgress": "In Progress",
+      "completed": "Completed",
+      "onHold": "On Hold",
+      "addProject": "+ Add New Project",
+      "editProject": "Edit Project",
+      "client": "Client",
+      "service": "Service",
+      "timeline": "Timeline",
+      "budget": "Contract Value",
+      "progress": "Progress",
+      "actions": "Actions",
+      "confidentialNotes": "Confidential Brief & Notes",
+      "save": "Save Project",
+      "delete": "Delete Project",
+      "deleteConfirm": "Are you sure you want to delete this project?",
+      "confidentialBadge": "Confidential Internal Data",
+      "loading": "Loading confidential CRM records...",
+      "empty": "No projects found matching your criteria.",
+      "deliveryProgress": "Delivery Progress",
+      "valueBudget": "Value / Budget",
+      "deliveryTarget": "Delivery Target",
+      "editTitle": "Edit Project",
+      "deleteTitle": "Delete Project",
+      "saveFailed": "Failed to save project.",
+      "deleteFailed": "Failed to delete project.",
+      "saving": "Saving...",
+      "form": {
+        "titleLabel": "Project Title",
+        "titlePlaceholder": "e.g. FleetFlow Real-Time Tracking Dashboard",
+        "clientLabel": "Client / Business Name",
+        "clientPlaceholder": "e.g. FleetFlow Logistics S.A.",
+        "serviceType": "Service Type",
+        "serviceLanding": "Landing Pages",
+        "serviceDashboards": "Dashboards & SaaS",
+        "serviceEcommerce": "E-commerce",
+        "serviceCustom": "Custom MERN",
+        "statusLabel": "Status",
+        "budgetLabel": "Budget / Value",
+        "budgetPlaceholder": "e.g. 2,800 MAD",
+        "startDate": "Start Date",
+        "targetDelivery": "Target Delivery Date",
+        "clientEmail": "Client Email",
+        "emailPlaceholder": "client@company.com",
+        "clientPhone": "Client Phone / WhatsApp",
+        "phonePlaceholder": "+212 6...",
+        "progressLabel": "Progress Percentage",
+        "notesLabel": "Confidential Notes & Client Requirements",
+        "notesPlaceholder": "Private notes, credentials, milestone links, architecture decisions..."
+      }
+    },
+    "quotes": {
+      "title": "Quote Requests & Submissions",
+      "subtitle": "Incoming inquiries from the public /quote form. Convert promising inquiries into active projects.",
+      "searchPlaceholder": "Search quotes...",
+      "statusAll": "All Requests",
+      "statusNew": "New",
+      "statusContacted": "Contacted",
+      "statusConverted": "Converted",
+      "statusArchived": "Archived",
+      "project": "Project",
+      "clientContact": "Client Contact",
+      "budgetTimeline": "Budget & Timeline",
+      "date": "Received",
+      "actions": "Actions",
+      "convertBtn": "Convert to Project",
+      "viewBrief": "View Full Brief",
+      "whatsApp": "Chat on WhatsApp",
+      "emailClient": "Email Client",
+      "loading": "Loading quote requests...",
+      "empty": "No quote requests found matching your filter.",
+      "statusLabel": "Status",
+      "newTitle": "New",
+      "viewDetailsTitle": "View Details",
+      "convertTitle": "Convert to Project",
+      "deleteTitle": "Delete",
+      "deleteConfirm": "Are you sure you want to delete this quote request?",
+      "statusFailed": "Failed to update quote status.",
+      "deleteFailed": "Failed to delete quote.",
+      "convertSuccess": "Quote converted to active Project successfully! You can view it in Projects CRM.",
+      "convertFailed": "Failed to convert quote.",
+      "detailTitle": "Quote Request",
+      "serviceType": "Service Type",
+      "suggestedBudget": "Suggested Budget",
+      "clientEmail": "Client Email",
+      "clientPhone": "Client Phone",
+      "scopeLabel": "Project Scope & Requirements Description:",
+      "scopeTitle": "Project Scope & Requirements Description:",
+      "convertModalTitle": "Convert Quote into Active Project CRM",
+      "convertModalDesc": "This will automatically create a new confidential project record for",
+      "convertDescEnd": "and mark this quote as converted.",
+      "clientName": "Client Name",
+      "chatWhatsapp": "Chat on WhatsApp",
+      "convertToProject": "Convert to Project",
+      "badgeNew": "new",
+      "converting": "Converting...",
+      "confirmConvert": "Confirm & Create Project"
+    },
+    "content": {
+      "title": "Site Content Editor",
+      "subtitle": "Lightweight CMS to update public headlines, general starting prices, and delivery timelines without code changes. Final negotiation for each project happens outside the site after the quote request.",
+      "saveSuccess": "Site content updated successfully!",
+      "heroSection": "Hero & Headlines",
+      "pricingSection": "Public Starting Prices & Timelines",
+      "contactSection": "External Contact Info",
+      "telegramSection": "Telegram Alert Integration",
+      "testTelegramBtn": "Send Test Telegram Alert",
+      "saveChangesBtn": "Save All Changes",
+      "loading": "Loading dynamic marketing content...",
+      "loadFailed": "Failed to load content",
+      "saving": "Saving...",
+      "savingChanges": "Saving Changes...",
+      "saveFailed": "Failed to update content.",
+      "availabilitySection": "Developer Availability & Project Acceptance",
+      "acceptanceTitle": "Developer Availability & Project Acceptance",
+      "statusEn": "Status Text (English)",
+      "statusAr": "Status Text (Arabic)",
+      "englishCopy": "English Marketing Copy",
+      "headlineTitle": "Headline Title",
+      "subtitleParagraph": "Subtitle Paragraph",
+      "arabicCopy": "النصوص باللغة العربية (Arabic Copy)",
+      "arabicHeadline": "عنوان الواجهة الرئيسي",
+      "arabicSubtitle": "النص التوضيحي الفرعي",
+      "pricingNotice": "These are public display prices only. The final project price is negotiated directly after the quote request is reviewed and discussed privately.",
+      "landingPagesCard": "Landing Pages",
+      "dashboardsCard": "Dashboards & SaaS",
+      "ecommerceCard": "E-Commerce Stores",
+      "startingPrice": "Starting Price (MAD)",
+      "timelineEn": "Timeline (EN)",
+      "whatsapp": "WhatsApp Number",
+      "contactEmail": "Contact Email",
+      "linkedin": "LinkedIn URL",
+      "github": "GitHub Profile URL",
+      "sendingTelegram": "Sending Test...",
+      "telegramDesc": "The external Telegram Bot integration alerts you instantly on your phone when new quotes or reviews arrive. To connect, add your",
+      "telegramAnd": "and",
+      "telegramDescEnd": "in server .env file.",
+      "telegramSimulated": "Telegram alert logged to backend terminal (Simulation / Dev Mode).",
+      "telegramSuccess": "Test alert successfully delivered to your Telegram chat!",
+      "telegramError": "Telegram Error"
+    },
+    "reviewMod": {
+      "title": "Review Moderation Queue",
+      "subtitle": "Manage incoming testimonials. Only approved reviews are displayed on the public /reviews page.",
+      "pendingTab": "Pending Moderation",
+      "approvedTab": "Approved Reviews",
+      "rejectedTab": "Rejected",
+      "approveBtn": "Approve & Publish",
+      "rejectBtn": "Reject",
+      "deleteBtn": "Delete",
+      "featureToggle": "Toggle Featured",
+      "loading": "Loading review moderation queue...",
+      "empty": "No reviews in this queue.",
+      "clientFallback": "Client",
+      "generalFallback": "General",
+      "received": "Received",
+      "featuredBadge": "★ Featured on Public Page",
+      "feature": "Feature",
+      "unfeature": "Unfeature",
+      "reapprove": "Re-approve",
+      "editTitle": "Edit Review",
+      "deleteTitle": "Delete Review",
+      "editModalTitle": "Edit Client Review",
+      "clientNameLabel": "Client Name",
+      "roleLabel": "Role & Company",
+      "ratingLabel": "Rating (1-5)",
+      "commentLabel": "Review Comment",
+      "saveEdits": "Save Edits",
+      "deleteConfirm": "Are you sure you want to delete this review permanently?",
+      "statusFailed": "Failed to update review status.",
+      "featuredFailed": "Failed to toggle featured status.",
+      "deleteFailed": "Failed to delete review.",
+      "saveFailed": "Failed to save review edits.",
+      "saving": "Saving..."
+    }
+  },
+  "privacy": {
+    "title": "Privacy Policy for Digitway",
+    "intro": "At Digitway, we value your privacy and are committed to protecting your personal information. This policy explains how we collect, use, and protect your data when you use our website.",
+    "collectTitle": "What Information We Collect",
+    "collect1": "Contact information: Email address, phone number (optional)",
+    "collect2": "Project details: Project name, service type, budget, timeline",
+    "collect3": "Personal information: Your name or business name (optional)",
+    "useTitle": "How We Use Your Information",
+    "useIntro": "We collect your information solely for the purpose of:",
+    "use1": "Responding to your quote requests",
+    "use2": "Communicating about your project requirements",
+    "use3": "Providing information about our services",
+    "use4": "Scheduling consultations or project discussions",
+    "shareTitle": "Data Sharing",
+    "shareText": "We do not share, sell, or rent your personal information to any third parties. Your information remains confidential and is used only for direct communication with you regarding your project inquiry.",
+    "securityTitle": "Data Security",
+    "securityText": "We take reasonable measures to protect your information using secure storage and communication methods. However, no method of transmission over the internet is 100% secure.",
+    "rightsTitle": "Your Rights",
+    "rightsIntro": "You have the right to:",
+    "rights1": "Request access to your personal data",
+    "rights2": "Request deletion of your personal data",
+    "rights3": "Ask questions about how we use your information",
+    "deleteTitle": "Contact Us for Data Deletion",
+    "deleteIntro": "To request deletion of your personal information, please email us directly at:",
+    "deleteEmail": "hello.northstack2@gmail.com",
+    "deleteOutro": "We will respond to your request within 7 business days and permanently delete your information from our systems.",
+    "updatesTitle": "Policy Updates",
+    "updatesText": "We may update this privacy policy from time to time. Changes will be posted on this page.",
+    "lastUpdated": "Last Updated: August 29, 2026"
+  },
+  "seo": {
+    "home": {
+      "title": "Digitway — High-Performance MERN Freelance Engineering",
+      "description": "Custom Landing Pages, SaaS Dashboards & High-Converting E-commerce stores engineered with the MERN stack. Clean code, fixed pricing, rapid delivery."
+    },
+    "services": {
+      "title": "Services | Digitway",
+      "description": "Specialized full-stack web development: high-converting landing pages, fullstack SaaS dashboards, and ultra-fast e-commerce stores built with modern MERN."
+    },
+    "landingPages": {
+      "title": "High-Converting Landing Pages | Digitway",
+      "description": "Custom landing pages with sub-900ms load times, 95+ Core Web Vitals, conversion-focused copy, and mobile-first responsive design."
+    },
+    "dashboards": {
+      "title": "SaaS Dashboards & Web Apps | Digitway",
+      "description": "Fullstack MERN dashboards with role-based auth, real-time analytics, data visualization, and scalable architecture. From idea to launch."
+    },
+    "ecommerce": {
+      "title": "Fast E-Commerce Stores | Digitway",
+      "description": "Custom e-commerce with ultra-fast carts, multi-gateway payments, and inventory management. Zero Shopify bloat, 100% code ownership."
+    },
+    "portfolio": {
+      "title": "Portfolio | Digitway",
+      "description": "Explore real projects built by Digitway: landing pages, SaaS dashboards, and e-commerce stores for clients across industries."
+    },
+    "process": {
+      "title": "Our Process | Digitway",
+      "description": "Discover Digitway's workflow: from scoping and planning to development and launch. Direct communication, transparent pricing, full code ownership."
+    },
+    "reviews": {
+      "title": "Client Reviews | Digitway",
+      "description": "Real testimonials from clients whose successful projects were built by Digitway. Transparent quality guarantee."
+    },
+    "contactLinks": {
+      "title": "Contact Us | Digitway",
+      "description": "Reach Digitway directly via WhatsApp, Email, LinkedIn, or Instagram. Available for new projects and quick questions."
+    },
+    "quote": {
+      "title": "Request a Quote | Digitway",
+      "description": "Get a custom quote for your project. Tell us your requirements and we'll respond within 24 hours with a detailed proposal."
+    },
+    "privacy": {
+      "title": "Privacy Policy | Digitway",
+      "description": "Digitway's privacy policy: how we collect, use, and protect your personal data. Direct communication and full confidentiality."
+    }
+  }
+}
