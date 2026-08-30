@@ -2,8 +2,10 @@ import db from '../db/database.js';
 
 export async function getNotifications(req, res) {
   try {
-    const notifications = db.prepare('SELECT * FROM notifications ORDER BY id DESC LIMIT 20').all();
-    const unreadCount = db.prepare('SELECT COUNT(*) as count FROM notifications WHERE is_read = 0').get().count;
+    const result = await db.execute({ sql: 'SELECT * FROM notifications ORDER BY id DESC LIMIT 20', args: [] });
+    const notifications = result.rows;
+    const countResult = await db.execute({ sql: 'SELECT COUNT(*) as count FROM notifications WHERE is_read = 0', args: [] });
+    const unreadCount = countResult.rows[0].count;
 
     return res.json({
       notifications,
@@ -18,7 +20,7 @@ export async function getNotifications(req, res) {
 export async function markAsRead(req, res) {
   try {
     const { id } = req.params;
-    db.prepare('UPDATE notifications SET is_read = 1 WHERE id = ?').run(id);
+    await db.execute({ sql: 'UPDATE notifications SET is_read = 1 WHERE id = ?', args: [id] });
     return res.json({ success: true });
   } catch (error) {
     console.error('Mark notification read error:', error);
@@ -28,7 +30,7 @@ export async function markAsRead(req, res) {
 
 export async function markAllAsRead(req, res) {
   try {
-    db.prepare('UPDATE notifications SET is_read = 1 WHERE is_read = 0').run();
+    await db.execute({ sql: 'UPDATE notifications SET is_read = 1 WHERE is_read = 0', args: [] });
     return res.json({ success: true, message: 'All notifications marked as read.' });
   } catch (error) {
     console.error('Mark all read error:', error);
@@ -38,7 +40,7 @@ export async function markAllAsRead(req, res) {
 
 export async function clearNotifications(req, res) {
   try {
-    db.prepare('DELETE FROM notifications').run();
+    await db.execute({ sql: 'DELETE FROM notifications', args: [] });
     return res.json({ success: true, message: 'Notifications cleared.' });
   } catch (error) {
     console.error('Clear notifications error:', error);

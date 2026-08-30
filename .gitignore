@@ -15,7 +15,7 @@ build/
 server/.env
 client/.env
 
-# Database
+# Database (legacy SQLite — now using Turso/libSQL)
 server/data/*.db
 server/data/*.db-journal
 server/data/*.db-shm

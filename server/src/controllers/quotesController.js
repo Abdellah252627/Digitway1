@@ -15,24 +15,24 @@ export async function submitQuote(req, res) {
       return res.status(400).json({ error: 'Client name must be 100 characters or less.' });
     }
 
-    // Insert quote
-    const insertStmt = db.prepare(`
-      INSERT INTO quotes (client_name, project_name, service_type, description, budget, email, phone, timeline, status, is_read)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'new', 0)
-    `);
+    const insertResult = await db.execute({
+      sql: `
+        INSERT INTO quotes (client_name, project_name, service_type, description, budget, email, phone, timeline, status, is_read)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'new', 0)
+      `,
+      args: [
+        client_name.trim(),
+        project_name.trim(),
+        service_type.trim(),
+        description.trim(),
+        budget.trim(),
+        email.trim().toLowerCase(),
+        phone ? phone.trim() : '',
+        timeline ? timeline.trim() : 'Flexible',
+      ],
+    });
 
-    const result = insertStmt.run(
-      client_name.trim(),
-      project_name.trim(),
-      service_type.trim(),
-      description.trim(),
-      budget.trim(),
-      email.trim().toLowerCase(),
-      phone ? phone.trim() : '',
-      timeline ? timeline.trim() : 'Flexible'
-    );
-
-    const quoteId = result.lastInsertRowid;
+    const quoteId = insertResult.lastInsertRowid;
     const newQuote = {
       id: quoteId,
       client_name,
@@ -45,22 +45,23 @@ export async function submitQuote(req, res) {
       timeline,
     };
 
-    // 1. Create In-Panel Notification
     try {
-      db.prepare(`
-        INSERT INTO notifications (type, title, message, link, is_read)
-        VALUES (?, ?, ?, ?, 0)
-      `).run(
-        'quote_received',
-        'New Quote Request',
-        `New request received for "${project_name}" (${budget}) from ${client_name} (${email})`,
-        `/admin/quotes`
-      );
+      await db.execute({
+        sql: `
+          INSERT INTO notifications (type, title, message, link, is_read)
+          VALUES (?, ?, ?, ?, 0)
+        `,
+        args: [
+          'quote_received',
+          'New Quote Request',
+          `New request received for "${project_name}" (${budget}) from ${client_name} (${email})`,
+          `/admin/quotes`,
+        ],
+      });
     } catch (notifErr) {
       console.warn('Failed to insert notification:', notifErr.message);
     }
 
-    // 2. Dispatch Telegram Bot Alert asynchronously
     sendTelegramNotification(formatQuoteAlert(newQuote)).catch(err =>
       console.error('Telegram alert dispatch error:', err)
     );
@@ -100,7 +101,8 @@ export async function getAllQuotes(req, res) {
 
     query += ' ORDER BY id DESC';
 
-    const quotes = db.prepare(query).all(...params);
+    const result = await db.execute({ sql: query, args: params });
+    const quotes = result.rows;
     return res.json({ quotes });
   } catch (error) {
     console.error('Get quotes error:', error);
@@ -113,7 +115,8 @@ export async function updateQuoteStatus(req, res) {
     const { id } = req.params;
     const { status, is_read } = req.body;
 
-    const existing = db.prepare('SELECT * FROM quotes WHERE id = ?').get(id);
+    const existingResult = await db.execute({ sql: 'SELECT * FROM quotes WHERE id = ?', args: [id] });
+    const existing = existingResult.rows[0];
     if (!existing) {
       return res.status(404).json({ error: 'Quote request not found.' });
     }
@@ -121,7 +124,10 @@ export async function updateQuoteStatus(req, res) {
     const newStatus = status !== undefined ? status : existing.status;
     const newIsRead = is_read !== undefined ? (is_read ? 1 : 0) : existing.is_read;
 
-    db.prepare('UPDATE quotes SET status = ?, is_read = ? WHERE id = ?').run(newStatus, newIsRead, id);
+    await db.execute({
+      sql: 'UPDATE quotes SET status = ?, is_read = ? WHERE id = ?',
+      args: [newStatus, newIsRead, id],
+    });
 
     return res.json({ success: true, message: 'Quote updated successfully.' });
   } catch (error) {
@@ -133,7 +139,7 @@ export async function updateQuoteStatus(req, res) {
 export async function deleteQuote(req, res) {
   try {
     const { id } = req.params;
-    db.prepare('DELETE FROM quotes WHERE id = ?').run(id);
+    await db.execute({ sql: 'DELETE FROM quotes WHERE id = ?', args: [id] });
     return res.json({ success: true, message: 'Quote deleted successfully.' });
   } catch (error) {
     console.error('Delete quote error:', error);
@@ -146,35 +152,38 @@ export async function convertQuoteToProject(req, res) {
     const { id } = req.params;
     const { client_name, target_delivery, notes } = req.body;
 
-    const quote = db.prepare('SELECT * FROM quotes WHERE id = ?').get(id);
+    const quoteResult = await db.execute({ sql: 'SELECT * FROM quotes WHERE id = ?', args: [id] });
+    const quote = quoteResult.rows[0];
     if (!quote) {
       return res.status(404).json({ error: 'Quote not found.' });
     }
-
-    // Insert into projects CRM
-    const insertProject = db.prepare(`
-      INSERT INTO projects (title, client_name, service_type, status, start_date, target_delivery, budget, contact_email, contact_phone, notes, progress_percentage)
-      VALUES (?, ?, ?, 'in_discussion', ?, ?, ?, ?, ?, ?, 10)
-    `);
 
     const startDate = new Date().toISOString().split('T')[0];
     const finalClientName = client_name || quote.client_name || quote.email.split('@')[0];
     const finalNotes = notes || `Converted from Quote #${quote.id}:\n${quote.description}`;
 
-    const projectResult = insertProject.run(
-      quote.project_name,
-      finalClientName,
-      quote.service_type,
-      startDate,
-      target_delivery || '',
-      quote.budget,
-      quote.email,
-      quote.phone || '',
-      finalNotes
-    );
+    const projectResult = await db.execute({
+      sql: `
+        INSERT INTO projects (title, client_name, service_type, status, start_date, target_delivery, budget, contact_email, contact_phone, notes, progress_percentage)
+        VALUES (?, ?, ?, 'in_discussion', ?, ?, ?, ?, ?, ?, 10)
+      `,
+      args: [
+        quote.project_name,
+        finalClientName,
+        quote.service_type,
+        startDate,
+        target_delivery || '',
+        quote.budget,
+        quote.email,
+        quote.phone || '',
+        finalNotes,
+      ],
+    });
 
-    // Update quote status to converted
-    db.prepare('UPDATE quotes SET status = ?, is_read = 1 WHERE id = ?').run('converted', id);
+    await db.execute({
+      sql: 'UPDATE quotes SET status = ?, is_read = 1 WHERE id = ?',
+      args: ['converted', id],
+    });
 
     return res.json({
       success: true,

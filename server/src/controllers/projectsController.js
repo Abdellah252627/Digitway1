@@ -24,7 +24,8 @@ export async function getAllProjects(req, res) {
 
     query += ' ORDER BY id DESC';
 
-    const projects = db.prepare(query).all(...params);
+    const result = await db.execute({ sql: query, args: params });
+    const projects = result.rows;
     return res.json({ projects });
   } catch (error) {
     console.error('Get projects error:', error);
@@ -35,7 +36,8 @@ export async function getAllProjects(req, res) {
 export async function getProjectById(req, res) {
   try {
     const { id } = req.params;
-    const project = db.prepare('SELECT * FROM projects WHERE id = ?').get(id);
+    const result = await db.execute({ sql: 'SELECT * FROM projects WHERE id = ?', args: [id] });
+    const project = result.rows[0];
 
     if (!project) {
       return res.status(404).json({ error: 'Project not found.' });
@@ -68,28 +70,29 @@ export async function createProject(req, res) {
       return res.status(400).json({ error: 'Title, Client Name, and Service Type are required.' });
     }
 
-    const insertStmt = db.prepare(`
-      INSERT INTO projects (
-        title, client_name, service_type, status,
-        start_date, target_delivery, budget,
-        contact_email, contact_phone, notes, progress_percentage,
-        created_at, updated_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
-    `);
-
-    const result = insertStmt.run(
-      title.trim(),
-      client_name.trim(),
-      service_type.trim(),
-      status,
-      start_date || new Date().toISOString().split('T')[0],
-      target_delivery || '',
-      budget || '',
-      contact_email || '',
-      contact_phone || '',
-      notes || '',
-      parseInt(progress_percentage || '0', 10)
-    );
+    const result = await db.execute({
+      sql: `
+        INSERT INTO projects (
+          title, client_name, service_type, status,
+          start_date, target_delivery, budget,
+          contact_email, contact_phone, notes, progress_percentage,
+          created_at, updated_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+      `,
+      args: [
+        title.trim(),
+        client_name.trim(),
+        service_type.trim(),
+        status,
+        start_date || new Date().toISOString().split('T')[0],
+        target_delivery || '',
+        budget || '',
+        contact_email || '',
+        contact_phone || '',
+        notes || '',
+        parseInt(progress_percentage || '0', 10),
+      ],
+    });
 
     return res.status(201).json({
       success: true,
@@ -119,42 +122,44 @@ export async function updateProject(req, res) {
       progress_percentage,
     } = req.body;
 
-    const existing = db.prepare('SELECT * FROM projects WHERE id = ?').get(id);
+    const existingResult = await db.execute({ sql: 'SELECT * FROM projects WHERE id = ?', args: [id] });
+    const existing = existingResult.rows[0];
     if (!existing) {
       return res.status(404).json({ error: 'Project not found.' });
     }
 
-    const updateStmt = db.prepare(`
-      UPDATE projects SET
-        title = ?,
-        client_name = ?,
-        service_type = ?,
-        status = ?,
-        start_date = ?,
-        target_delivery = ?,
-        budget = ?,
-        contact_email = ?,
-        contact_phone = ?,
-        notes = ?,
-        progress_percentage = ?,
-        updated_at = CURRENT_TIMESTAMP
-      WHERE id = ?
-    `);
-
-    updateStmt.run(
-      title !== undefined ? title : existing.title,
-      client_name !== undefined ? client_name : existing.client_name,
-      service_type !== undefined ? service_type : existing.service_type,
-      status !== undefined ? status : existing.status,
-      start_date !== undefined ? start_date : existing.start_date,
-      target_delivery !== undefined ? target_delivery : existing.target_delivery,
-      budget !== undefined ? budget : existing.budget,
-      contact_email !== undefined ? contact_email : existing.contact_email,
-      contact_phone !== undefined ? contact_phone : existing.contact_phone,
-      notes !== undefined ? notes : existing.notes,
-      progress_percentage !== undefined ? parseInt(progress_percentage, 10) : existing.progress_percentage,
-      id
-    );
+    await db.execute({
+      sql: `
+        UPDATE projects SET
+          title = ?,
+          client_name = ?,
+          service_type = ?,
+          status = ?,
+          start_date = ?,
+          target_delivery = ?,
+          budget = ?,
+          contact_email = ?,
+          contact_phone = ?,
+          notes = ?,
+          progress_percentage = ?,
+          updated_at = CURRENT_TIMESTAMP
+        WHERE id = ?
+      `,
+      args: [
+        title !== undefined ? title : existing.title,
+        client_name !== undefined ? client_name : existing.client_name,
+        service_type !== undefined ? service_type : existing.service_type,
+        status !== undefined ? status : existing.status,
+        start_date !== undefined ? start_date : existing.start_date,
+        target_delivery !== undefined ? target_delivery : existing.target_delivery,
+        budget !== undefined ? budget : existing.budget,
+        contact_email !== undefined ? contact_email : existing.contact_email,
+        contact_phone !== undefined ? contact_phone : existing.contact_phone,
+        notes !== undefined ? notes : existing.notes,
+        progress_percentage !== undefined ? parseInt(progress_percentage, 10) : existing.progress_percentage,
+        id,
+      ],
+    });
 
     return res.json({ success: true, message: 'Project updated successfully.' });
   } catch (error) {
@@ -166,7 +171,7 @@ export async function updateProject(req, res) {
 export async function deleteProject(req, res) {
   try {
     const { id } = req.params;
-    db.prepare('DELETE FROM projects WHERE id = ?').run(id);
+    await db.execute({ sql: 'DELETE FROM projects WHERE id = ?', args: [id] });
     return res.json({ success: true, message: 'Project deleted successfully.' });
   } catch (error) {
     console.error('Delete project error:', error);
@@ -176,24 +181,27 @@ export async function deleteProject(req, res) {
 
 export async function getDashboardOverview(req, res) {
   try {
-    // 1. Projects stats
-    const totalProjects = db.prepare('SELECT COUNT(*) as count FROM projects').get().count;
-    const activeProjects = db.prepare("SELECT COUNT(*) as count FROM projects WHERE status IN ('in_discussion', 'in_progress')").get().count;
-    const completedProjects = db.prepare("SELECT COUNT(*) as count FROM projects WHERE status = 'completed'").get().count;
+    const totalProjectsResult = await db.execute({ sql: 'SELECT COUNT(*) as count FROM projects', args: [] });
+    const totalProjects = totalProjectsResult.rows[0].count;
+    const activeProjectsResult = await db.execute({ sql: "SELECT COUNT(*) as count FROM projects WHERE status IN ('in_discussion', 'in_progress')", args: [] });
+    const activeProjects = activeProjectsResult.rows[0].count;
+    const completedProjectsResult = await db.execute({ sql: "SELECT COUNT(*) as count FROM projects WHERE status = 'completed'", args: [] });
+    const completedProjects = completedProjectsResult.rows[0].count;
 
-    // 2. Quotes stats
-    const totalQuotes = db.prepare('SELECT COUNT(*) as count FROM quotes').get().count;
-    const newQuotes = db.prepare("SELECT COUNT(*) as count FROM quotes WHERE status = 'new'").get().count;
+    const totalQuotesResult = await db.execute({ sql: 'SELECT COUNT(*) as count FROM quotes', args: [] });
+    const totalQuotes = totalQuotesResult.rows[0].count;
+    const newQuotesResult = await db.execute({ sql: "SELECT COUNT(*) as count FROM quotes WHERE status = 'new'", args: [] });
+    const newQuotes = newQuotesResult.rows[0].count;
 
-    // 3. Reviews stats
-    const pendingReviews = db.prepare("SELECT COUNT(*) as count FROM reviews WHERE status = 'pending'").get().count;
-    const approvedReviews = db.prepare("SELECT COUNT(*) as count FROM reviews WHERE status = 'approved'").get().count;
+    const pendingReviewsResult = await db.execute({ sql: "SELECT COUNT(*) as count FROM reviews WHERE status = 'pending'", args: [] });
+    const pendingReviews = pendingReviewsResult.rows[0].count;
+    const approvedReviewsResult = await db.execute({ sql: "SELECT COUNT(*) as count FROM reviews WHERE status = 'approved'", args: [] });
+    const approvedReviews = approvedReviewsResult.rows[0].count;
 
-    // 4. Recent projects
-    const recentProjects = db.prepare('SELECT * FROM projects ORDER BY id DESC LIMIT 5').all();
-
-    // 5. Recent quotes
-    const recentQuotes = db.prepare('SELECT * FROM quotes ORDER BY id DESC LIMIT 5').all();
+    const recentProjectsResult = await db.execute({ sql: 'SELECT * FROM projects ORDER BY id DESC LIMIT 5', args: [] });
+    const recentProjects = recentProjectsResult.rows;
+    const recentQuotesResult = await db.execute({ sql: 'SELECT * FROM quotes ORDER BY id DESC LIMIT 5', args: [] });
+    const recentQuotes = recentQuotesResult.rows;
 
     return res.json({
       stats: {

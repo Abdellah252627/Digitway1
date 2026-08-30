@@ -3,12 +3,16 @@ import { sendTelegramNotification, formatReviewAlert } from '../services/telegra
 
 export async function getPublicReviews(req, res) {
   try {
-    const reviews = db.prepare(`
-      SELECT id, client_name, role_company, rating, comment, service_type, is_featured, created_at
-      FROM reviews
-      WHERE status = 'approved'
-      ORDER BY is_featured DESC, id DESC
-    `).all();
+    const result = await db.execute({
+      sql: `
+        SELECT id, client_name, role_company, rating, comment, service_type, is_featured, created_at
+        FROM reviews
+        WHERE status = 'approved'
+        ORDER BY is_featured DESC, id DESC
+      `,
+      args: [],
+    });
+    const reviews = result.rows;
 
     return res.json({ reviews });
   } catch (error) {
@@ -30,18 +34,19 @@ export async function submitReview(req, res) {
       return res.status(400).json({ error: 'Rating must be a whole number between 1 and 5.' });
     }
 
-    const insertStmt = db.prepare(`
-      INSERT INTO reviews (client_name, role_company, rating, comment, service_type, status, is_featured)
-      VALUES (?, ?, ?, ?, ?, 'pending', 0)
-    `);
-
-    const result = insertStmt.run(
-      client_name.trim(),
-      role_company ? role_company.trim() : '',
-      numRating,
-      comment.trim(),
-      service_type ? service_type.trim() : 'General'
-    );
+    const result = await db.execute({
+      sql: `
+        INSERT INTO reviews (client_name, role_company, rating, comment, service_type, status, is_featured)
+        VALUES (?, ?, ?, ?, ?, 'pending', 0)
+      `,
+      args: [
+        client_name.trim(),
+        role_company ? role_company.trim() : '',
+        numRating,
+        comment.trim(),
+        service_type ? service_type.trim() : 'General',
+      ],
+    });
 
     const reviewId = result.lastInsertRowid;
     const newReview = {
@@ -53,22 +58,23 @@ export async function submitReview(req, res) {
       service_type,
     };
 
-    // 1. Create In-Panel Notification
     try {
-      db.prepare(`
-        INSERT INTO notifications (type, title, message, link, is_read)
-        VALUES (?, ?, ?, ?, 0)
-      `).run(
-        'review_submitted',
-        'New Review Pending Approval',
-        `Client review submitted by ${client_name} (${numRating} Stars)`,
-        `/admin/reviews`
-      );
+      await db.execute({
+        sql: `
+          INSERT INTO notifications (type, title, message, link, is_read)
+          VALUES (?, ?, ?, ?, 0)
+        `,
+        args: [
+          'review_submitted',
+          'New Review Pending Approval',
+          `Client review submitted by ${client_name} (${numRating} Stars)`,
+          `/admin/reviews`,
+        ],
+      });
     } catch (notifErr) {
       console.warn('Failed to insert notification:', notifErr.message);
     }
 
-    // 2. Telegram Alert
     sendTelegramNotification(formatReviewAlert(newReview)).catch(err =>
       console.error('Telegram review alert error:', err)
     );
@@ -98,7 +104,8 @@ export async function getAllReviews(req, res) {
 
     query += ' ORDER BY id DESC';
 
-    const reviews = db.prepare(query).all(...params);
+    const result = await db.execute({ sql: query, args: params });
+    const reviews = result.rows;
     return res.json({ reviews });
   } catch (error) {
     console.error('Get all reviews error:', error);
@@ -111,7 +118,8 @@ export async function updateReviewStatus(req, res) {
     const { id } = req.params;
     const { status, is_featured } = req.body;
 
-    const existing = db.prepare('SELECT * FROM reviews WHERE id = ?').get(id);
+    const existingResult = await db.execute({ sql: 'SELECT * FROM reviews WHERE id = ?', args: [id] });
+    const existing = existingResult.rows[0];
     if (!existing) {
       return res.status(404).json({ error: 'Review not found.' });
     }
@@ -119,11 +127,10 @@ export async function updateReviewStatus(req, res) {
     const newStatus = status !== undefined ? status : existing.status;
     const newFeatured = is_featured !== undefined ? (is_featured ? 1 : 0) : existing.is_featured;
 
-    db.prepare('UPDATE reviews SET status = ?, is_featured = ? WHERE id = ?').run(
-      newStatus,
-      newFeatured,
-      id
-    );
+    await db.execute({
+      sql: 'UPDATE reviews SET status = ?, is_featured = ? WHERE id = ?',
+      args: [newStatus, newFeatured, id],
+    });
 
     return res.json({
       success: true,
@@ -140,27 +147,31 @@ export async function updateReview(req, res) {
     const { id } = req.params;
     const { client_name, role_company, rating, comment, service_type } = req.body;
 
-    const existing = db.prepare('SELECT * FROM reviews WHERE id = ?').get(id);
+    const existingResult = await db.execute({ sql: 'SELECT * FROM reviews WHERE id = ?', args: [id] });
+    const existing = existingResult.rows[0];
     if (!existing) {
       return res.status(404).json({ error: 'Review not found.' });
     }
 
-    db.prepare(`
-      UPDATE reviews SET
-        client_name = ?,
-        role_company = ?,
-        rating = ?,
-        comment = ?,
-        service_type = ?
-      WHERE id = ?
-    `).run(
-      client_name || existing.client_name,
-      role_company !== undefined ? role_company : existing.role_company,
-      rating !== undefined ? parseInt(rating, 10) : existing.rating,
-      comment || existing.comment,
-      service_type || existing.service_type,
-      id
-    );
+    await db.execute({
+      sql: `
+        UPDATE reviews SET
+          client_name = ?,
+          role_company = ?,
+          rating = ?,
+          comment = ?,
+          service_type = ?
+        WHERE id = ?
+      `,
+      args: [
+        client_name || existing.client_name,
+        role_company !== undefined ? role_company : existing.role_company,
+        rating !== undefined ? parseInt(rating, 10) : existing.rating,
+        comment || existing.comment,
+        service_type || existing.service_type,
+        id,
+      ],
+    });
 
     return res.json({ success: true, message: 'Review updated successfully.' });
   } catch (error) {
@@ -172,7 +183,7 @@ export async function updateReview(req, res) {
 export async function deleteReview(req, res) {
   try {
     const { id } = req.params;
-    db.prepare('DELETE FROM reviews WHERE id = ?').run(id);
+    await db.execute({ sql: 'DELETE FROM reviews WHERE id = ?', args: [id] });
     return res.json({ success: true, message: 'Review deleted successfully.' });
   } catch (error) {
     console.error('Delete review error:', error);

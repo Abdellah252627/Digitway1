@@ -1,6 +1,6 @@
 import db from './database.js';
 
-export function seedDatabase() {
+export async function seedDatabase() {
   console.log('🌱 Checking and seeding initial data...');
 
   // 1. Initial Site Content
@@ -41,12 +41,15 @@ export function seedDatabase() {
     }
   };
 
-  const existingContent = db.prepare('SELECT key FROM site_content WHERE key = ?').get('global_settings');
-  if (!existingContent) {
-    db.prepare('INSERT INTO site_content (key, value) VALUES (?, ?)').run(
-      'global_settings',
-      JSON.stringify(defaultContent)
-    );
+  const contentResult = await db.execute({
+    sql: 'SELECT key FROM site_content WHERE key = ?',
+    args: ['global_settings'],
+  });
+  if (contentResult.rows.length === 0) {
+    await db.execute({
+      sql: 'INSERT INTO site_content (key, value) VALUES (?, ?)',
+      args: ['global_settings', JSON.stringify(defaultContent)],
+    });
     console.log('✅ Seeded default site content');
   }
 
@@ -57,5 +60,5 @@ export function seedDatabase() {
 // Only site_content config is seeded above.
 
 if (import.meta.url === `file:///${process.argv[1].replace(/\\/g, '/')}`) {
-  seedDatabase();
+  seedDatabase().catch(err => console.error('Seed error:', err));
 }

@@ -60,7 +60,7 @@ app.use('/api/*', (req, res) => {
 });
 
 // Initialize database seed & start server
-seedDatabase();
+seedDatabase().catch(err => console.error('Seed error:', err));
 
 app.listen(config.port, () => {
   console.log(`\n======================================================`);

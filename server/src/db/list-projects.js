@@ -1,6 +1,7 @@
 import db from './database.js';
 
-const rows = db.prepare('SELECT id, title, client_name, status, budget, created_at FROM projects ORDER BY id').all();
+const result = await db.execute('SELECT id, title, client_name, status, budget, created_at FROM projects ORDER BY id');
+const rows = result.rows;
 
 console.log(`\n📋 Projects table — ${rows.length} row(s):\n`);
 console.log('─'.repeat(100));

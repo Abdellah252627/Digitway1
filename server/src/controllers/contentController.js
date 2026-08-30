@@ -3,7 +3,8 @@ import { sendTelegramNotification } from '../services/telegramService.js';
 
 export async function getPublicContent(req, res) {
   try {
-    const row = db.prepare('SELECT value FROM site_content WHERE key = ?').get('global_settings');
+    const result = await db.execute({ sql: 'SELECT value FROM site_content WHERE key = ?', args: ['global_settings'] });
+    const row = result.rows[0];
     if (!row) {
       return res.status(404).json({ error: 'Content not found.' });
     }
@@ -23,15 +24,19 @@ export async function updateContent(req, res) {
     }
 
     const valueJson = JSON.stringify(content);
-    const existing = db.prepare('SELECT key FROM site_content WHERE key = ?').get('global_settings');
+    const existingResult = await db.execute({ sql: 'SELECT key FROM site_content WHERE key = ?', args: ['global_settings'] });
+    const existing = existingResult.rows[0];
 
     if (existing) {
-      db.prepare('UPDATE site_content SET value = ?, updated_at = CURRENT_TIMESTAMP WHERE key = ?').run(
-        valueJson,
-        'global_settings'
-      );
+      await db.execute({
+        sql: 'UPDATE site_content SET value = ?, updated_at = CURRENT_TIMESTAMP WHERE key = ?',
+        args: [valueJson, 'global_settings'],
+      });
     } else {
-      db.prepare('INSERT INTO site_content (key, value) VALUES (?, ?)').run('global_settings', valueJson);
+      await db.execute({
+        sql: 'INSERT INTO site_content (key, value) VALUES (?, ?)',
+        args: ['global_settings', valueJson],
+      });
     }
 
     return res.json({ success: true, message: 'Site content updated successfully.' });
@@ -44,7 +49,7 @@ export async function updateContent(req, res) {
 export async function testTelegram(req, res) {
   try {
     const testMessage = `🤖 *Digitway Alert System Test*
-━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━
 ✅ Telegram Bot notifications are successfully connected and working!
 ⏱ *Timestamp:* ${new Date().toLocaleString()}`;
 

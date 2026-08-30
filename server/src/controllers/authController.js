@@ -31,11 +31,10 @@ export async function requestOtp(req, res) {
     const otpHash = hashOtp(otp);
 
     // Save hashed OTP (never store raw code)
-    db.prepare('INSERT INTO auth_otps (email, otp, expires_at, used) VALUES (?, ?, ?, 0)').run(
-      normalizedEmail,
-      otpHash,
-      expiresAt
-    );
+    await db.execute({
+      sql: 'INSERT INTO auth_otps (email, otp, expires_at, used) VALUES (?, ?, ?, 0)',
+      args: [normalizedEmail, otpHash, expiresAt],
+    });
 
     // Send email / log
     await sendOtpEmail(normalizedEmail, otp);
@@ -66,11 +65,11 @@ export async function verifyOtp(req, res) {
     const otpHash = hashOtp(cleanOtp);
 
     // Find the latest valid OTP for this email (compare hashes)
-    const record = db.prepare(`
-      SELECT * FROM auth_otps 
-      WHERE email = ? AND otp = ? AND used = 0 
-      ORDER BY id DESC LIMIT 1
-    `).get(normalizedEmail, otpHash);
+    const result = await db.execute({
+      sql: `SELECT * FROM auth_otps WHERE email = ? AND otp = ? AND used = 0 ORDER BY id DESC LIMIT 1`,
+      args: [normalizedEmail, otpHash],
+    });
+    const record = result.rows[0];
 
     if (!record) {
       return res.status(400).json({ error: 'Invalid or expired verification code.' });
@@ -81,7 +80,10 @@ export async function verifyOtp(req, res) {
     }
 
     // Mark as used
-    db.prepare('UPDATE auth_otps SET used = 1 WHERE id = ?').run(record.id);
+    await db.execute({
+      sql: 'UPDATE auth_otps SET used = 1 WHERE id = ?',
+      args: [record.id],
+    });
 
     // Generate JWT token (valid for 7 days)
     const token = jwt.sign(

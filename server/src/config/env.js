@@ -16,6 +16,8 @@ export const config = {
   nodeEnv: process.env.NODE_ENV || 'development',
   adminEmail: process.env.ADMIN_EMAIL || 'admin@digitway.com',
   jwtSecret: process.env.JWT_SECRET,
+  tursoDatabaseUrl: process.env.TURSO_DATABASE_URL || 'file:./data/digitway.db',
+  tursoAuthToken: process.env.TURSO_AUTH_TOKEN || '',
   telegram: {
     botToken: process.env.TELEGRAM_BOT_TOKEN || '',
     chatId: process.env.TELEGRAM_CHAT_ID || '',
