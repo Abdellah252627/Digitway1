@@ -32,7 +32,7 @@ export async function submitQuote(req, res) {
       ],
     });
 
-    const quoteId = insertResult.lastInsertRowid;
+    const quoteId = Number(insertResult.lastInsertRowid);
     const newQuote = {
       id: quoteId,
       client_name,
@@ -188,7 +188,7 @@ export async function convertQuoteToProject(req, res) {
     return res.json({
       success: true,
       message: 'Quote converted to active Project successfully!',
-      projectId: projectResult.lastInsertRowid,
+      projectId: Number(projectResult.lastInsertRowid),
     });
   } catch (error) {
     console.error('Convert quote error:', error);

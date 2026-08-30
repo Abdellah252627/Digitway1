@@ -5,7 +5,7 @@ export async function getNotifications(req, res) {
     const result = await db.execute({ sql: 'SELECT * FROM notifications ORDER BY id DESC LIMIT 20', args: [] });
     const notifications = result.rows;
     const countResult = await db.execute({ sql: 'SELECT COUNT(*) as count FROM notifications WHERE is_read = 0', args: [] });
-    const unreadCount = countResult.rows[0].count;
+    const unreadCount = Number(countResult.rows[0].count);
 
     return res.json({
       notifications,

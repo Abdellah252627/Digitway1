@@ -48,7 +48,7 @@ export async function submitReview(req, res) {
       ],
     });
 
-    const reviewId = result.lastInsertRowid;
+    const reviewId = Number(result.lastInsertRowid);
     const newReview = {
       id: reviewId,
       client_name,

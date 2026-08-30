@@ -97,7 +97,7 @@ export async function createProject(req, res) {
     return res.status(201).json({
       success: true,
       message: 'Project created successfully.',
-      projectId: result.lastInsertRowid,
+      projectId: Number(result.lastInsertRowid),
     });
   } catch (error) {
     console.error('Create project error:', error);
@@ -182,21 +182,21 @@ export async function deleteProject(req, res) {
 export async function getDashboardOverview(req, res) {
   try {
     const totalProjectsResult = await db.execute({ sql: 'SELECT COUNT(*) as count FROM projects', args: [] });
-    const totalProjects = totalProjectsResult.rows[0].count;
+    const totalProjects = Number(totalProjectsResult.rows[0].count);
     const activeProjectsResult = await db.execute({ sql: "SELECT COUNT(*) as count FROM projects WHERE status IN ('in_discussion', 'in_progress')", args: [] });
-    const activeProjects = activeProjectsResult.rows[0].count;
+    const activeProjects = Number(activeProjectsResult.rows[0].count);
     const completedProjectsResult = await db.execute({ sql: "SELECT COUNT(*) as count FROM projects WHERE status = 'completed'", args: [] });
-    const completedProjects = completedProjectsResult.rows[0].count;
+    const completedProjects = Number(completedProjectsResult.rows[0].count);
 
     const totalQuotesResult = await db.execute({ sql: 'SELECT COUNT(*) as count FROM quotes', args: [] });
-    const totalQuotes = totalQuotesResult.rows[0].count;
+    const totalQuotes = Number(totalQuotesResult.rows[0].count);
     const newQuotesResult = await db.execute({ sql: "SELECT COUNT(*) as count FROM quotes WHERE status = 'new'", args: [] });
-    const newQuotes = newQuotesResult.rows[0].count;
+    const newQuotes = Number(newQuotesResult.rows[0].count);
 
     const pendingReviewsResult = await db.execute({ sql: "SELECT COUNT(*) as count FROM reviews WHERE status = 'pending'", args: [] });
-    const pendingReviews = pendingReviewsResult.rows[0].count;
+    const pendingReviews = Number(pendingReviewsResult.rows[0].count);
     const approvedReviewsResult = await db.execute({ sql: "SELECT COUNT(*) as count FROM reviews WHERE status = 'approved'", args: [] });
-    const approvedReviews = approvedReviewsResult.rows[0].count;
+    const approvedReviews = Number(approvedReviewsResult.rows[0].count);
 
     const recentProjectsResult = await db.execute({ sql: 'SELECT * FROM projects ORDER BY id DESC LIMIT 5', args: [] });
     const recentProjects = recentProjectsResult.rows;
