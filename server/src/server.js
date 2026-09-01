@@ -15,7 +15,12 @@ const app = express();
 
 // Middlewares
 app.use(cors({
-  origin: true,
+  origin: [
+    'https://digitway1.vercel.app',
+    'https://digitway1-f7bsgg5d3-abdellahdev-s-projects.vercel.app',
+    'http://localhost:5173',
+    'http://localhost:3000',
+  ],
   credentials: true,
 }));
 app.use(express.json());
