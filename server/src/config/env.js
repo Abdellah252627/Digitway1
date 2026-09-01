@@ -5,14 +5,16 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-dotenv.config({ path: path.join(__dirname, '../../.env') });
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config({ path: path.join(__dirname, '../../.env') });
+}
 
 if (!process.env.JWT_SECRET) {
   throw new Error('FATAL: JWT_SECRET is required. Set it in server/.env or environment variables.');
 }
 
 export const config = {
-  port: process.env.PORT || 5000,
+  port: process.env.PORT,
   nodeEnv: process.env.NODE_ENV || 'development',
   adminEmail: process.env.ADMIN_EMAIL || 'admin@digitway.com',
   jwtSecret: process.env.JWT_SECRET,
