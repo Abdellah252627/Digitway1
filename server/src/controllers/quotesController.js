@@ -1,5 +1,5 @@
 import db from '../db/database.js';
-import { sendTelegramNotification, formatQuoteAlert } from '../services/telegramService.js';
+import { sendTelegramNotification, formatQuoteAlert, formatProjectAlert } from '../services/telegramService.js';
 
 export async function submitQuote(req, res) {
   try {
@@ -184,6 +184,15 @@ export async function convertQuoteToProject(req, res) {
       sql: 'UPDATE quotes SET status = ?, is_read = 1 WHERE id = ?',
       args: ['converted', id],
     });
+
+    sendTelegramNotification(
+      formatProjectAlert({
+        client_name: finalClientName,
+        title: quote.project_name,
+        budget: quote.budget,
+        start_date: startDate,
+      })
+    ).catch(err => console.error('Telegram project alert error:', err));
 
     return res.json({
       success: true,

@@ -1,5 +1,7 @@
 import { config } from '../config/env.js';
 
+const ADMIN_URL = process.env.ADMIN_URL || 'https://your-railway-domain.com/admin';
+
 export async function sendTelegramNotification(message) {
   const { botToken, chatId } = config.telegram;
 
@@ -37,17 +39,18 @@ export async function sendTelegramNotification(message) {
 export function formatQuoteAlert(quote) {
   return `🚀 *Digitway Alert: New Quote Request!*
 ━━━━━━━━━━━━━━━━━━━━
+👤 *Client:* ${quote.client_name || 'N/A'}
 📌 *Project:* ${quote.project_name}
 🛠 *Service:* ${quote.service_type}
 💰 *Budget:* ${quote.budget}
-👤 *Email:* \`${quote.email}\`
+📧 *Email:* \`${quote.email}\`
 📞 *Phone:* \`${quote.phone || 'N/A'}\`
 ⏱ *Timeline:* ${quote.timeline || 'Flexible'}
 
 📝 *Brief:*
 _${quote.description}_
 
-🔗 *Admin Panel:* [Open Digitway Quotes](http://localhost:5173/admin/quotes)`;
+🔗 *Admin Panel:* [Open Digitway Quotes](${ADMIN_URL}/quotes)`;
 }
 
 export function formatReviewAlert(review) {
@@ -61,5 +64,16 @@ export function formatReviewAlert(review) {
 💬 *Comment:*
 _${review.comment}_
 
-🔗 *Moderate Review:* [Open Digitway Moderation](http://localhost:5173/admin/reviews)`;
+🔗 *Moderate Review:* [Open Digitway Moderation](${ADMIN_URL}/reviews)`;
+}
+
+export function formatProjectAlert(project) {
+  return `✅ *Digitway Alert: Quote Converted to Project!*
+━━━━━━━━━━━━━━━━━━━━
+👤 *Client:* ${project.client_name || 'N/A'}
+📌 *Project:* ${project.title}
+💰 *Budget:* ${project.budget || 'N/A'}
+📅 *Start Date:* ${project.start_date || 'Today'}
+
+🔗 *Admin Panel:* [Open Digitway Projects](${ADMIN_URL}/projects)`;
 }
