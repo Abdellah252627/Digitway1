@@ -67,10 +67,7 @@ app.use('/api/*', (req, res) => {
 // Initialize database seed & start server
 seedDatabase().catch(err => console.error('Seed error:', err));
 
-app.listen(config.port, () => {
-  console.log(`\n======================================================`);
-  console.log(`🟢 Digitway Server running on http://localhost:${config.port}`);
-  console.log(`🔐 Admin Email configured: ${config.adminEmail}`);
-  console.log(`📱 Telegram Bot Alert: ${config.telegram.botToken ? 'Configured' : 'Dev Simulation Mode'}`);
-  console.log(`======================================================\n`);
+const PORT = parseInt(process.env.PORT) || 3000;
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running on port ${PORT}`);
 });
