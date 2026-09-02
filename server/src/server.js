@@ -1,3 +1,4 @@
+console.log('Railway PORT env:', process.env.PORT);
 import express from 'express';
 import cors from 'cors';
 import { config } from './config/env.js';
