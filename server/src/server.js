@@ -17,8 +17,9 @@ const app = express();
 // Middlewares
 app.use(cors({
   origin: [
-    'https://digitway1.vercel.app',
+    'https://digitway1.netlify.app',
     'https://digitway1-f7bsgg5d3-abdellahdev-s-projects.vercel.app',
+    'https://digitway1.vercel.app',
     'http://localhost:5173',
     'http://localhost:3000',
   ],
@@ -65,10 +66,10 @@ app.use('/api/*', (req, res) => {
   res.status(404).json({ error: 'API endpoint not found' });
 });
 
-// Initialize database seed & start server
-seedDatabase().catch(err => console.error('Seed error:', err));
-
 const PORT = parseInt(process.env.PORT) || 3000;
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+// Initialize database seed in background
+seedDatabase().catch(err => console.error('Seed error:', err));
